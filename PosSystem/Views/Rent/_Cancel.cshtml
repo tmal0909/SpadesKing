@@ -1,0 +1,93 @@
+﻿@model RentMD
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@* 租金管理 - 取消 *@
+@if (Model.Status.Equals(Accounting_Status.Normal))
+{
+    <div>
+        <div class="">
+            <div class="">
+                <p>取消後將無法復原資料，確認要取消此帳務紀錄?</p>
+            </div>
+
+            <table>
+                <tbody>
+                    <tr>
+                        <th>結帳日期</th>
+                        <td>@Model.UpdateTime</td>
+                    </tr>
+                    <tr>
+                        <th>結帳積分</th>
+                        <td>@Model.Integration</td>
+                    </tr>
+                    <tr>
+                        <th>帳務狀態</th>
+                        <td>@Model.Status</td>
+                    </tr>
+
+                    <tr>
+                        <th>操作人員</th>
+                        <td>@Model.OperatorName</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="">
+            @using (Ajax.BeginForm("Cancel", "Rent", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnBegin = "OnRequestBegin",
+                OnSuccess = "OnRequestSuccess",
+                OnFailure = "OnRequestFail"
+            }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(x => x.RecordID)
+
+                <div class="">
+                    <label>管理者密碼</label>
+                    @Html.PasswordFor(x => x.AdministratorPwd, new { @class = "", placeholder = "" })
+                    @Html.ValidationMessageFor(x => x.AdministratorPwd, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="">
+                    <input type="submit" class="btn" value="送出" />
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="">
+        <div class="">
+            <p>帳務紀錄已取消</p>
+        </div>
+
+        <table>
+            <tbody>
+                <tr>
+                    <th>結帳日期</th>
+                    <td>@Model.UpdateTime</td>
+                </tr>
+                <tr>
+                    <th>結帳積分</th>
+                    <td>@Model.Integration</td>
+                </tr>
+                <tr>
+                    <th>帳務狀態</th>
+                    <td>@Model.Status</td>
+                </tr>
+
+                <tr>
+                    <th>操作人員</th>
+                    <td>@Model.OperatorName</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}

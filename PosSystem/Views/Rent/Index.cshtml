@@ -1,0 +1,49 @@
+﻿@model List<AccountingViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* 租金管理 - 首頁 *@
+<div class="table-custom">
+    <div class="table-title">租金管理</div>
+    <div class="top-div">
+        <div class="btn operationBtn-Check">結帳</div>
+        <hr />
+    </div>
+    <div class="bottom-div-default">
+        <table class="" id="table-Rent">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>更新時間</th>
+                    <th>結帳積分</th>
+                    <th>帳務狀態</th>
+                    <th>操作人員</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.RecordID</td>
+                        <td>@item.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                        <td>@item.Integration</td>
+                        <td>@item.Status</td>
+                        <td>@item.OperatorName</td>
+                        <td>
+                            <div>
+                                <div class="btn operationBtn-Cancel" title="取消" data-recordid="@item.RecordID"><span class="icon-ui-trash"></span></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/siteRentJs")
+}

@@ -1,0 +1,61 @@
+﻿@model UserViewModel
+
+@* 員工管理 - 詳細資訊 *@
+<div>
+    <table class="half">
+        <tbody>
+            <tr>
+                <th>姓名</th>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <th>身份證字號</th>
+                <td>@Model.IdentityNumber</td>
+            </tr>
+            <tr>
+                <th>生日</th>
+                <td>@Model.BirthDay.ToString("yyyy/MM/dd")</td>
+            </tr>
+            <tr>
+                <th>電話</th>
+                <td>@Model.Phone</td>
+            </tr>
+            <tr>
+                <th>地址</th>
+                <td>@Model.Address</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <th>Line ID</th>
+                <td>@Model.LineID</td>
+            </tr>
+            <tr>
+                <th>WeChat ID</th>
+                <td>@Model.WeChatID</td>
+            </tr>
+            <tr>
+                <th class="">密碼</th>
+                <td class="">@Model.UserPwd</td>
+            </tr>
+            <tr>
+                <th class="">權限</th>
+                <td class="">@Model.AuthLevel</td>
+            </tr>
+            <tr>
+                <th class="">建立日期</th>
+                <th class="">@Model.ConstructTime.ToString("yyyy/MM/dd HH:mm:ss")</th>
+            </tr>
+            <tr>
+                <th class="">更新日期</th>
+                <td class="">@Model.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+            </tr>
+            <tr>
+                <th class="">操作人員</th>
+                <td class="">@Model.OperatorName</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

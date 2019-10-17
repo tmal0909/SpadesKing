@@ -1,0 +1,83 @@
+﻿@model List<OrderViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* 出餐明細 - 首頁 *@
+<div class="table-custom">
+    <div class="table-title">出餐明細</div>
+    <div class="top-div">
+        <div class="space-between custom-option">
+            <div class="z999">
+                <div class="inline-block date-label">
+                    <label>開始日期</label>
+                    <input type="text" class="dateFilter-OrderDetail" id="dateFilter-OrderDetail-DateStart" placeholder="" readonly />
+                </div>
+
+                <div class="inline-block date-label">
+                    <label>結束日期</label>
+                    <input type="text" class="dateFilter-OrderDetail" id="dateFilter-OrderDetail-DateEnd" placeholder="" readonly />
+                </div>
+            </div>
+
+            <div class="option">
+                <label class="">狀態</label>
+                <select class="statusFilter-OrderDetail" id="statusFilter-OrderDetail">
+                    <option value="準備中" selected>準備中</option>
+                    <option value="完成">完成</option>
+                    <option value="取消">取消</option>
+                    <option value="全部">全部</option>
+                </select>
+                <div class="btn operationBtn-Refresh">更新</div>
+            </div>
+
+
+        </div>
+
+        <hr />
+    </div>
+    <div class="bottom-div-default">
+        <table id="table-OrderDetail">
+            <thead>
+                <tr>
+                    <th>取消</th>
+                    <th>單號</th>
+                    <th>項目</th>
+                    <th>類別</th>
+                    <th>數量</th>
+                    <th>狀態</th>
+                    <th>更新時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var groupData in Model.GroupBy(x => x.OrderNo))
+            {
+                var data = groupData.ToList();
+                for (int i = 0, len = data.Count; i < len; i++)
+                {
+                        <tr>
+                            <td>
+                                <div class='operationBtn-Cancel icon-ui-close' title="取消" data-orderno="@data[i].OrderNo"></div>
+                            </td>
+                            <td>@data[i].OrderNo</td>
+                            <td>@data[i].MealName</td>
+                            <td>@data[i].MealType</td>
+                            <td>@data[i].Quantity</td>
+                            <td>@data[i].Status</td>
+                            <td>@data[i].UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                            <td>
+                                <div class="btn operationBtn-Finish icon-ui-check-mark" title="完成" data-recordid="@data[i].RecordID"></div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/siteOrderDetailJs")
+}

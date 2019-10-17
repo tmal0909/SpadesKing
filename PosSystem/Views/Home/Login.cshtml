@@ -1,0 +1,80 @@
+﻿@model LoginMD
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="zh-tw">
+<head>
+    <link rel="apple-touch-icon" sizes="57x57" href="~/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="~/img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="~/img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/img/favicon/favicon.ico" type="image/x-icon">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpadesKing</title>
+    @Styles.Render("~/Content/css")
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/calcite")
+</head>
+<body class="bg">
+    <div class="top-tr out"></div>
+    <div class="left-tr-out"></div>
+    <div class="bottom-tr-out"></div>
+    <div class="grid-container h100 flex z999">
+        <div class="column-8 center-column login">
+            <div class="top-tr"></div>
+            <div class="leader-2 column-8 trailer-4 login-ui flex">
+                <div class="column-6 pre-1 post-1 top-nav-title title-custom  font-weight100">
+                    <div class="logo"></div>
+                    <div class="line"></div>
+                    <!--note 帳號密碼 -->
+                    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div style="position:relative;">
+                            @Html.EditorFor(x => x.Phone, new { htmlAttributes = new { @class = "input-custom", placeholder = "手機號碼" } })
+                            @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div style="position:relative;">
+                            @Html.PasswordFor(x => x.UserPwd, new { @class = "input-custom", placeholder = "密碼" })
+                            @Html.ValidationMessageFor(x => x.UserPwd, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="flex"  style="position:relative; margin-top: 1.5rem; "><div class="login-error">@TempData["ErrMsg"]</div>
+
+                        <input type="submit" class="btn-login btn-fill" value="登入" /></div>
+                    }
+                    <!--end 帳號密碼-->
+                </div>
+            </div>
+            <div class="left-tr"></div>
+            <div class="center-tr"></div>
+        </div>
+    </div>
+</body>
+</html>

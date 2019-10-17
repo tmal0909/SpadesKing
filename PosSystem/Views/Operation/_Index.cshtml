@@ -1,0 +1,55 @@
+﻿@model List<OperationRecordViewModel>
+
+@* 積分管理 - 操作紀錄 *@
+<div class="h100">
+    <div class="point-nav">
+        @* 操作區 *@
+        <div class="inline-block right z999 ml-1">
+            <div class="btn operationBtn-Purchase">購買</div>
+            <div class="btn operationBtn-Withdraw">提領</div>
+            <div class="btn operationBtn-Deposit">回存</div>
+            <div class="btn operationBtn-Transfer">轉移</div>
+            <div class="btn operationBtn-Modify">修改</div>
+        </div>
+
+        @* 日期篩選 *@
+        <div class="inline-block z999  ">
+            <div class="inline-block date-label">
+                <label>開始日期</label>
+                <input type="text" class="dateFilter-Operation" id="dateFilter-Operation-DateStart" placeholder="" readonly />
+            </div>
+
+            <div class="inline-block date-label">
+                <label>結束日期</label>
+                <input type="text" class="dateFilter-Operation" id="dateFilter-Operation-DateEnd" placeholder="" readonly />
+            </div>
+        </div>
+    </div>
+
+    @* 積分交易紀錄 *@
+    <table class="" id="table-Operation">
+        <thead>
+            <tr>
+                <th>會員</th>
+                <th>類型</th>
+                <th>積分</th>
+                <th>備註</th>
+                <th>時間</th>
+                <th>操作人員</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MemberName</td>
+                    <td>@item.OperationType</td>
+                    <td>@item.Integration</td>
+                    <td>@item.Note</td>
+                    <td>@item.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                    <td>@item.OperatorName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

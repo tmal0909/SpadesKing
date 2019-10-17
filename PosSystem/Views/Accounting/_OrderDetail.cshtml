@@ -1,0 +1,49 @@
+﻿@model List<OrderViewModel>
+
+@* 點餐明細 *@
+<div>
+    <div>
+        <table class="menu-table half">
+            <thead>
+                <tr>
+                    <th>點餐日期</th>
+                    <td>@ViewBag.Date</td>
+                </tr>
+            </thead>     
+        </table>
+    </div>
+    <div>
+        <table id="table-Detail-Order">
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>數量</th>
+                    <th>狀態</th>
+                    <th>合計</th>
+                    <th>操作人員</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    long total = item.UnitIntegration * item.Quantity;
+
+                    <tr>
+                        <td>@item.MealName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Status</td>
+                        <td>@total</td>
+                        <td>@item.OperatorName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    InitDataTable($('#table-Detail-Order'), {
+        Order: [[0, 'desc']],
+        ColumnDefs: [{ width: '200px', targets: 0 }]
+    });
+</script>

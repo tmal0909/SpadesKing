@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* 營業分析 - 首頁 *@
+<div class="table-custom">
+    <div class="table-title">營業分析</div>
+
+    <div class="top-div">
+        @* 發行概況 *@
+        @Html.Action("Index", "Issue")
+        <hr />
+    </div>
+
+    <div class="bottom-div">
+        @* 帳務資料 *@
+        @Html.Action("Index", "Accounting")
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/siteIssueJs")
+    @Scripts.Render("~/bundles/siteAccountingJs")
+}

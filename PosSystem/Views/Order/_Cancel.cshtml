@@ -1,0 +1,135 @@
+﻿@model OrderMD
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@* 出餐列表 - 取消 *@
+@if (Model.Status.Equals(Accounting_Status.Normal))
+{
+    string memberName = Model.MemberID <= 0 ? "" : Model.MemberOptions.Where(x => Model.MemberID.ToString().Equals(x.Value)).Any() ? Model.MemberOptions.Where(x => Model.MemberID.ToString().Equals(x.Value)).First().Text : "會員資料已刪除";
+    
+    <div>
+        <div class="">
+            <div class="">
+                <p>取消後將無法復原資料，確認要取消此出餐紀錄?</p>
+            </div>
+
+            <div class="point-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>更新時間</th>
+                            <th>付款方式</th>
+                            <th>會員名稱</th>
+                            <th>積分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                            <td>@Model.PaymentType</td>
+                            <td>@memberName</td>
+                            <td>@Model.Order.Sum(x => x.Total)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>餐點</th>
+                        <th>數量</th>
+                        <th>狀態</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Order)
+                    {
+                        <tr>
+                            <td>@item.MealName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="">
+            @using (Ajax.BeginForm("CancelOrder", "Order", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnBegin = "OnRequestBegin",
+                OnSuccess = "OnRequestSuccess",
+                OnFailure = "OnRequestFail"
+            }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(x => x.OrderNo)
+
+                <div class="">
+                    <label>管理者密碼</label>
+                    @Html.PasswordFor(x => x.AdministratorPwd, new { @class = "", placeholder = "" })
+                    @Html.ValidationMessageFor(x => x.AdministratorPwd, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="">
+                    <input type="submit" class="btn" value="送出" />
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    string memberName = Model.MemberID <= 0 ? "" : Model.MemberOptions.Where(x => Model.MemberID.ToString().Equals(x.Value)).Any() ? Model.MemberOptions.Where(x => Model.MemberID.ToString().Equals(x.Value)).First().Text : "會員資料已刪除";
+
+    <div class="">
+        <div class="">
+            <p>出餐紀錄已取消</p>
+        </div>
+
+        <div class="point-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>更新時間</th>
+                        <th>付款方式</th>
+                        <th>會員名稱</th>
+                        <th>積分</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                        <td>@Model.PaymentType</td>
+                        <td>@memberName</td>
+                        <td>@Model.Order.Sum(x => x.Total)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>餐點</th>
+                    <th>數量</th>
+                    <th>狀態</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Order)
+                {
+                    <tr>
+                        <td>@item.MealName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

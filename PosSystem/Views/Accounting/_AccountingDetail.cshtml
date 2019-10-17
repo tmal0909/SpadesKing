@@ -1,0 +1,57 @@
+﻿@model List<AccountingViewModel>
+
+@* 帳務明細 *@
+<div class="h100">
+    <div>
+        <table class="half">
+            <thead>
+                <tr>
+                    <th>帳務日期</th>
+                    <th>合計</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@ViewBag.Date</td>
+                    <td>@Model.Where(x => x.Status.Equals(Accounting_Status.Normal) && !x.PaymentType.Equals(Accounting_PaymentType.Treat)).Sum(x => x.Integration)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <table id="table-Detail-Accounting">
+            <thead>
+                <tr>
+                    <th>帳務類別</th>
+                    <th>積分</th>
+                    <th>付款方式</th>
+                    <th>帳務狀態</th>
+                    <th>會員名稱</th>
+                    <th>更新時間</th>
+                    <th>操作人員</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Type</td>
+                        <td>@item.Integration</td>
+                        <td>@item.PaymentType</td>
+                        <td>@item.Status</td>
+                        <td>@item.MemberName</td>
+                        <td>@item.UpdateTime.ToString("HH:mm:ss")</td>
+                        <td>@item.OperatorName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    InitDataTable($('#table-Detail-Accounting'), {
+        Order: [[5, 'desc']],
+        ColumnDefs: [{ width: '75px', targets: 5 }]
+    });
+</script>

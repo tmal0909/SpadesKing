@@ -1,0 +1,100 @@
+﻿@model OrderMD
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@* 點餐 - 新增訂單 *@
+<div>
+    <div class="point-table ">
+        <table>
+            <thead>
+                <tr>
+                    <th>付款方式</th>
+                    <th>積分總計</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>@Model.PaymentType</td>
+                    <td>@Model.Order.Sum(x => x.Total)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        @using (Ajax.BeginForm("CheckOrder", "Order", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "OnRequestBegin",
+            OnSuccess = "OnRequestSuccess",
+            OnFailure = "OnRequestFail"
+        }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(x => x.PaymentType)
+
+            for (int i = 0, len = Model.Order.Count; i < len; i++)
+            {
+                @Html.HiddenFor(x => x.Order[i].MealID)
+                @Html.HiddenFor(x => x.Order[i].MealName)
+                @Html.HiddenFor(x => x.Order[i].MealType)
+                @Html.HiddenFor(x => x.Order[i].Quantity)
+                @Html.HiddenFor(x => x.Order[i].Integration)
+                @Html.HiddenFor(x => x.Order[i].Total)
+            }
+
+            if (Model.PaymentType == Accounting_PaymentType.Member)
+            {
+                <div class="">
+                    <label>轉出會員</label>
+                    @Html.MemberDropDownListFor(x => x.MemberID, Model.MemberOptions, new { @class = "orderCheck-Member" })
+                    @Html.ValidationMessageFor(x => x.MemberID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="">
+                    <label>會員密碼</label>
+                    @Html.PasswordFor(x => x.MemberPwd, new { @class = "orderCheck-MemberPwd", placeholder = "" })
+                    @Html.ValidationMessageFor(x => x.MemberPwd, "", new { @class = "text-danger" })
+                </div>
+
+                <script>
+                    InitSelectInput($('#MemberID'));
+                </script>
+            }
+
+            @* 明細 *@
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>類別</th>
+                            <th>數量</th>
+                            <th>積分合計</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Order)
+                        {
+                            long sum = item.Integration * item.Quantity;
+
+                            <tr>
+                                <td>@item.MealName</td>
+                                <td>@item.MealType</td>
+                                <td>@item.Quantity</td>
+                                <td>@sum</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="">
+                <input type="submit" class="btn" value="送出" />
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,52 @@
+﻿@model List<MemberViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* 會員管理 - 首頁 *@
+<div class="table-custom">
+    <div class="table-title">會員管理</div>
+    <div class="top-div">
+        <div class="btn operationBtn-Create">新增</div>
+        <hr />
+    </div>
+    <div class="bottom-div-default">
+        <table class="" id="table-Member">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>積分</th>
+                    <th>電話</th>
+                    <th>最後消費日期</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    string consumptionDate = item.LastConsumptionDate != null ? Convert.ToDateTime(item.LastConsumptionDate).ToString("yyyy/MM/dd HH:mm:ss") : "";
+
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Integration</td>
+                        <td>@item.Phone</td>
+                        <td>@consumptionDate</td>
+                        <td>
+                            <div>
+                                <div class="btn operationBtn-Update" title="編輯" data-recordid="@item.RecordID"><span class="icon-ui-edit"></span></div>
+                                <div class="btn operationBtn-Delete" title="刪除" data-recordid="@item.RecordID"><span class="icon-ui-trash"></span></div>
+                                <div class="btn operationBtn-Detail" title="詳細資料" data-recordid="@item.RecordID"><span class="icon-ui-description"></span></div>
+                                <div class="btn operationBtn-Record" title="消費紀錄" data-recordid="@item.RecordID"><span class="icon-ui-review"></span></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/siteMemberJs")
+}

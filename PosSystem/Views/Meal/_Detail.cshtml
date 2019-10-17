@@ -1,0 +1,29 @@
+﻿@model MealViewModel
+
+@* 餐點管理 - 詳細資訊 *@
+<div>
+    <table class="half">
+        <tbody>
+            <tr>
+                <th>名稱</th>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <th>類型</th>
+                <td>@Model.Type</td>
+            </tr>
+            <tr>
+                <th>積分</th>
+                <td>@Model.Integration</td>
+            </tr>
+            <tr>
+                <th>更新時間</th>
+                <td>@Model.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+            </tr>
+            <tr>
+                <th>操作人員</th>
+                <td>@Model.OperatorName</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

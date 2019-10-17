@@ -1,0 +1,86 @@
+﻿@model UserMD
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@* 員工管理 - 新增 *@
+<div class="">
+    @using (Ajax.BeginForm("Create", "User", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnRequestBegin",
+        OnSuccess = "OnRequestSuccess",
+        OnFailure = "OnRequestFail"
+    }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="">
+            <label>姓名</label>
+            @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "", placeholder = "請輸入使用者姓名" } })
+            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>身份證字號</label>
+            @Html.EditorFor(x => x.IdentityNumber, new { htmlAttributes = new { @class = "", placeholder = "完整身份證字號或末四碼" } })
+            @Html.ValidationMessageFor(x => x.IdentityNumber, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>西元生日</label>
+            @Html.EditorFor(x => x.BirthDay, new { htmlAttributes = new { @class = "", @Value = "", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(x => x.BirthDay, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>手機號碼</label>
+            @Html.EditorFor(x => x.Phone, new { htmlAttributes = new { @class = "", placeholder = "09xxxxxxxx" } })
+            @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>住址</label>
+            @Html.EditorFor(x => x.Address, new { htmlAttributes = new { @class = "", placeholder = "XX縣XX市XX區XX路(街)XX段XX-X號XX樓" } })
+            @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>Email</label>
+            @Html.EditorFor(x => x.Email, new { htmlAttributes = new { @class = "", placeholder = "xxx@gmail.com" } })
+            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>Line ID</label>
+            @Html.EditorFor(x => x.LineID, new { htmlAttributes = new { @class = "", placeholder = "" } })
+            @Html.ValidationMessageFor(x => x.LineID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>WeChat ID</label>
+            @Html.EditorFor(x => x.WeChatID, new { htmlAttributes = new { @class = "", placeholder = "" } })
+            @Html.ValidationMessageFor(x => x.WeChatID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>權限</label>
+            @Html.DropDownListFor(x => x.AuthLevel, Model.AuthOptions, new { @class = "" })
+            @Html.ValidationMessageFor(x => x.AuthLevel, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>密碼</label>
+            @Html.EditorFor(x => x.UserPwd, new { htmlAttributes = new { @class = "", placeholder = "請輸入 6 - 20 字元長度密碼" } })
+            @Html.ValidationMessageFor(x => x.UserPwd, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <input type="submit" class="btn" value="送出" />
+        </div>
+    }
+</div>
+
+<script>
+    InitDatePicker($('#BirthDay'));
+</script>

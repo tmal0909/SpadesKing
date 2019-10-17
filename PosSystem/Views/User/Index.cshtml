@@ -1,0 +1,57 @@
+﻿@model List<UserViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* 員工管理 - 首頁 *@
+<div class="table-custom">
+    <div class="table-title">員工管理</div>
+    <div class="top-div">
+        <div class="btn operationBtn-Create">新增</div>
+        <hr />
+    </div>
+    <div class="bottom-div-default">
+        <table class="" id="table-User">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>權限</th>
+                    <th>電話</th>
+                    <th>地址</th>
+                    <th>更新時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.AuthLevel</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Address</td>
+                        <td>@item.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                        <td>
+                            <div>
+                                <div class="btn operationBtn-Update" title="編輯" data-recordid="@item.RecordID">
+                                    <span class="icon-ui-edit"></span>
+                                </div>
+                                <div class="btn operationBtn-Delete" title="刪除" data-recordid="@item.RecordID">
+                                    <span class="icon-ui-trash"></span>
+                                </div>
+                                <div class="btn operationBtn-Detail" title="詳細資料" data-recordid="@item.RecordID">
+                                    <span class="icon-ui-description"></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/siteUserJs")
+}

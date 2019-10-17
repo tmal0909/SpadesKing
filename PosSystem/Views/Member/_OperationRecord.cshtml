@@ -1,0 +1,54 @@
+﻿@model MemberOperationRecordViewModel
+
+@* 會員消費紀錄 *@
+<div>
+    <div>
+        <table class="half">
+            <thead>
+                <tr>
+                    <th>會員名稱</th>
+                    <th>積分餘額</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Member.Name</td>
+                    <td>@Model.Member.Integration</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <table class="" id="table-MemberOperationRecord">
+        <thead>
+            <tr>
+                <th>會員</th>
+                <th>類型</th>
+                <th>積分</th>
+                <th>備註</th>
+                <th>時間</th>
+                <th>操作人員</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Record)
+            {
+                <tr>
+                    <td>@item.MemberName</td>
+                    <td>@item.OperationType</td>
+                    <td>@item.Integration</td>
+                    <td>@item.Note</td>
+                    <td>@item.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                    <td>@item.OperatorName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    InitDataTable($('#table-MemberOperationRecord'), {
+        Order: [[4, 'desc']],
+        ColumnDefs: [{ width: '150px', targets: 4 }]
+    });
+</script>

@@ -1,0 +1,40 @@
+﻿@model MealMD
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@* 餐點管理 - 新增 *@
+<div class="">
+    @using (Ajax.BeginForm("Create", "Meal", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnRequestBegin",
+        OnSuccess = "OnRequestSuccess",
+        OnFailure = "OnRequestFail"
+    }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="">
+            <label>名稱</label>
+            @Html.EditorFor(x => x.Name, new { htmlAttributes = new { @class = "", placeholder = "餐點名稱" } })
+            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>類型</label>
+            @Html.DropDownListFor(x => x.Type, Model.TypeOptions, new { @class = "" })
+            @Html.ValidationMessageFor(x => x.Type, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>積分</label>
+            @Html.EditorFor(x => x.Integration, new { htmlAttributes = new { @class = "", @type = "number", @min = "0", @step = "1", placeholder = "請輸入積分" } })
+            @Html.ValidationMessageFor(x => x.Integration, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <input type="submit" class="btn" value="送出" />
+        </div>
+    }
+</div>

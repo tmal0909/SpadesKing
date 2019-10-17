@@ -1,0 +1,68 @@
+﻿@model UserViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* 帳號設定 *@
+<div class="table-custom">
+    <div class="table-title">帳號設定</div>
+    
+    <table> 
+        <tr>
+            <th>姓名</th>
+            <td id="setting-Name">@Model.Name</td>
+        </tr>
+        <tr>
+            <th>身份證字號</th>
+            <td id="setting-IdentityNumber">@Model.IdentityNumber</td>
+        </tr>
+        <tr>
+            <th>生日</th>
+            <td id="setting-BirthDay">@Model.BirthDay.ToString("yyyy/MM/dd")</td>
+        </tr>
+        <tr>
+            <th>電話</th>
+            <td id="setting-Phone">@Model.Phone</td>
+        </tr>
+        <tr>
+            <th>地址</th>
+            <td id="setting-Address">@Model.Address</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td id="setting-Email">@Model.Email</td>
+        </tr>
+        <tr>
+            <th>Line ID</th>
+            <td id="setting-LineID">@Model.LineID</td>
+        </tr>
+        <tr>
+            <th>WeChat ID</th>
+            <td id="setting-WeChatID">@Model.WeChatID</td>
+        </tr>
+        <tr>
+            <th>密碼</th>
+            <td id="setting-UserPwd">@Model.UserPwd</td>
+        </tr>
+        <tr>
+            <th>權限</th>
+
+            <td id="setting-AuthLevel">@Model.AuthLevel</td>
+        </tr>
+        <tr>
+            <th>建立日期</th>
+            <td id="setting-ConstructTime">@Model.ConstructTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+        </tr>
+        <tr>
+            <th>更新日期</th>
+            <td id="setting-UpdateTime">@Model.UpdateTime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+        </tr>
+    </table>
+
+    <div class="right btn operationBtn-Update" title="編輯" data-recordid="@Model.RecordID"><span class="icon-ui-edit"></span></div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/siteSettingJs")
+}   

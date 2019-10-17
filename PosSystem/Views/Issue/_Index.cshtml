@@ -1,0 +1,15 @@
+﻿@model IssueSummaryViewModel
+
+@* 積分管理 - 發行概況 *@
+<div class="point-table ">
+    <table>
+        <tr>
+            <td>發行量</td>
+            <td id="issueSummary-Distribution">@Model.Distribution</td>
+            <td>儲值餘額</td>
+            <td id="issueSummary-Balance">@Model.Balance</td>
+        </tr>
+    </table>
+
+    <div class="btn operationBtn-IssueRecord">發行紀錄</div>
+</div>

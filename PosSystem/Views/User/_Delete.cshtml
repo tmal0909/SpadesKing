@@ -1,0 +1,58 @@
+﻿@model UserMD
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@* 會員管理 - 刪除 *@
+<div class="">
+    <div class="">
+        <div class="">
+            <p>刪除後資料將無法回復，確認要刪除此員工?</p>
+        </div>
+        <table>
+            <tbody>
+                <tr>
+                    <th>名稱</th>
+                    <td>@Model.Name</td>
+                </tr>
+                <tr>
+                    <th>權限</th>
+                    <td>@Model.AuthLevel</td>
+                </tr>
+                <tr>
+                    <th>電話</th>
+                    <td>@Model.Phone</td>
+                </tr>
+                <tr>
+                    <th>地址</th>
+                    <td>@Model.Address</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="">
+        @using (Ajax.BeginForm("Delete", "User", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnBegin = "OnRequestBegin",
+            OnSuccess = "OnRequestSuccess",
+            OnFailure = "OnRequestFail"
+        }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(x => x.RecordID)
+
+            <div class="">
+                <label>管理者密碼</label>
+                @Html.PasswordFor(x => x.AdministratorPwd, new { @class = "", placeholder = "" })
+                @Html.ValidationMessageFor(x => x.AdministratorPwd, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="">
+                <input type="submit" class="btn" value="送出" />
+            </div>
+        }
+    </div>
+</div>

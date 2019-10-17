@@ -1,0 +1,67 @@
+﻿<div class="h100 menu flex-wrap">
+    <a class="menu-btn flex" href="@Url.Action("Index", "Order")">
+        <div class="">
+            <div class="add"></div>
+            <span class="">點餐結帳</span>
+        </div>
+    </a>
+
+    <a class="menu-btn flex" href="@Url.Action("Detail", "Order")">
+        <div class="">
+            <div class="assignment"></div>
+            <span class="">出餐明細</span>
+        </div>
+    </a>
+
+    <a class="menu-btn flex" href="@Url.Action("Index", "Rent")">
+        <div class="">
+            <div class="pay"></div>
+            <span class="">租金管理</span>
+        </div>
+    </a>
+
+    <a class="menu-btn flex" href="@Url.Action("Index", "Integration")">
+        <div class="">
+            <div class="point"></div>
+            <span class="">積分管理</span>
+        </div>
+    </a>
+
+    <a class="menu-btn flex" href="@Url.Action("Index", "Member")">
+        <div class="">
+            <div class="account"></div>
+            <span class="">會員管理</span>
+        </div>
+    </a>
+
+    <a class="menu-btn flex" href="@Url.Action("Index", "Setting")">
+        <div class="">
+            <div class="set"></div>
+            <span class="">帳號設定</span>
+        </div>
+    </a>
+
+    @if (ViewBag.AuthLevel == "管理者")
+    {
+        <a class="menu-btn flex" href="@Url.Action("Index", "Meal")">
+            <div class="">
+                <div class="restaurant"></div>
+                <span class="">餐點管理</span>
+            </div>
+        </a>
+
+        <a class="menu-btn flex" href="@Url.Action("Index", "User")">
+            <div class="">
+                <div class="group"></div>
+                <span class="">員工管理</span>
+            </div>
+        </a>
+
+        <a class="menu-btn flex" href="@Url.Action("Index", "Analysis")">
+            <div class="">
+                <div class="business"></div>
+                <span class="">營業分析</span>
+            </div>
+        </a>
+    }
+</div>

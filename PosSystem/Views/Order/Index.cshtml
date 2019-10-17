@@ -1,0 +1,95 @@
+﻿@model List<MealViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* 點餐 *@
+<div class="table-custom order">
+    <div class="table-title">點餐</div>
+
+    @* 點餐區 *@
+    <div class="">
+        <div class="space-between">
+            @* 點餐 - 食物區 *@
+            <div class="inline-block">
+                <select class="modifier-class" id="order-ChoiceFood">
+                    @foreach (var item in Model.Where(x => x.Type == "餐點"))
+                    {
+                        <option value="@item.RecordID" data-integration="@item.Integration">@item.Name</option>
+                    }
+                </select>
+                <input type="number" class="" id="order-QuantityFood" min="1" step="1" value="1" />
+                <div class="btn" id="operationBtn-OrderFood">新增</div>
+            </div>
+
+            @* 點餐 - 飲料區 *@
+            <div class="inline-block">
+                <select class="modifier-class" id="order-ChoiceDrink">
+                    @foreach (var item in Model.Where(x => x.Type == "飲料"))
+                    {
+                        <option value="@item.RecordID" data-integration="@item.Integration">@item.Name</option>
+                    }
+                </select>
+                <input type="number" class="" id="order-QuantityDrink" min="1" step="1" value="1" />
+                <div class="btn" id="operationBtn-OrderDrink">新增</div>
+            </div>
+
+            @* 點餐 - 其他 *@
+            <div class="inline-block">
+                <select class="modifier-class" id="order-ChoiceOther">
+                    @foreach (var item in Model.Where(x => x.Type == "其他"))
+                    {
+                        <option value="@item.RecordID" data-integration="@item.Integration">@item.Name</option>
+                    }
+                </select>
+                <input type="number" class="" id="order-QuantityOther" min="1" step="1" value="1" />
+                <div class="btn" id="operationBtn-OrderOther">新增</div>
+            </div>
+        </div>
+        <hr />
+    </div>
+
+    @* 餐點明細區塊 *@
+    <div class="bottom-div">
+      
+        <div>點餐明細</div>
+
+
+        <table class="table-fixed" id="table-OrderList">
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>類別</th>
+                    <th>積分合計</th>
+                    <th>數量</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="table-OrderList-Body"></tbody>
+        </table>
+
+
+        <hr />
+
+
+        <div>
+            <div class="inline-block total">
+                <div class="inline-block">積分總計 : </div>
+                <div class="inline-block" id="order-Sum">0</div>
+            </div>
+            <div class="right total-btn">
+                <div class="btn" id="operationBtn-Clear">清除</div>
+                <div class="btn operationBtn-Check" data-type="Cash">現金結帳</div>
+                <div class="btn operationBtn-Check" data-type="Integration">積分結帳</div>
+                <div class="btn operationBtn-Check" data-type="Member">會員結帳</div>
+                <div class="btn operationBtn-Check" data-type="Treat">招待</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/siteOrderIndexJs")
+}

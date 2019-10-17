@@ -1,0 +1,77 @@
+﻿@model AnalysisViewModel
+
+@* 帳務資料 - 首頁 *@
+<div class="h100">
+    @* 篩選區 *@
+    <div>
+        <div class="z999">
+            <div class="inline-block date-label">
+                <label>開始日期</label>
+                <input type="text" class="dateFilter-Accounting" id="dateFilter-Accounting-DateStart" placeholder="" readonly />
+            </div>
+
+            <div class="inline-block date-label">
+                <label>結束日期</label>
+                <input type="text" class="dateFilter-Accounting" id="dateFilter-Accounting-DateEnd" placeholder="" readonly />
+            </div>
+
+            <div class="btn operationBtn-Chart right">統計圖表</div>
+        </div>
+
+    </div>
+
+    @* 資料區 *@
+    <div class="h100">
+        <table id="table-Accounting">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>收入合計</th>
+                    <th>取消合計</th>
+                    <th>修正合計</th>
+                    <th>餐點收入</th>
+                    <th>租金收入</th>
+                    <th>儲值收入</th>
+                    <th>招待支出</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var date in Model.DateList)
+                    {
+                        var accountingGeneral = Model.GeneralAccounting.Where(x => x.UpdateTime.ToString("yyyy/MM/dd").Equals(date));
+                        var accountingStored = Model.StoredAccounting.Where(x => x.UpdateTime.ToString("yyyy/MM/dd").Equals(date));
+
+                        long order = accountingGeneral.Where(x => x.Status == Accounting_Status.Normal && x.Type.Equals(Accounting_Type.Order) && !x.PaymentType.Equals(Accounting_PaymentType.Treat)).Sum(x => x.Integration);
+                        long rent = accountingGeneral.Where(x => x.Status == Accounting_Status.Normal && x.Type.Equals(Accounting_Type.Rent) && !x.PaymentType.Equals(Accounting_PaymentType.Treat)).Sum(x => x.Integration);
+                        long treat = accountingGeneral.Where(x => x.Status == Accounting_Status.Normal && x.Type.Equals(Accounting_Type.Order) && x.PaymentType.Equals(Accounting_PaymentType.Treat)).Sum(x => x.Integration);
+                        long cancel = accountingGeneral.Where(x => x.Status == Accounting_Status.Cancel).Sum(x => x.Integration);
+                        long purchase = accountingStored.Where(x => x.Category.Equals(IssueRecord_Category.Purchase)).Sum(x => x.Integration);
+                        long modify = accountingStored.Where(x => x.Category.Equals(IssueRecord_Category.Modify)).Sum(x => x.Integration);
+
+                        long sumDeposit = purchase - modify;
+                        long sumIncome = order + rent + sumDeposit;
+
+                        <tr>
+                            <td>@date</td>
+                            <td>@sumIncome</td>
+                            <td>@cancel</td>
+                            <td>@modify</td>
+                            <td>@order</td>
+                            <td>@rent</td>
+                            <td>@sumDeposit</td>
+                            <td>@treat</td>
+                            <td>
+                                <div>
+                                    <div class="btn operationBtn-Detail-Accounting" data-date="@date" title="帳務紀錄"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="svg-icon"><path d="M1 0v12h29.8V0H1zm27 9H4V3h24v6zM1 14v8h8v-8H1zm6 6H3v-4h4v4zm5-6v8h8v-8h-8zm6 6h-4v-4h4v4zm5-6v18h8V14h-8zm6 16h-4V16h4v14zM1 24v8h8v-8H1zm6 6H3v-4h4v4zm5-6v8h8v-8h-8zm6 6h-4v-4h4v4z" /></svg></div>
+                                    <div class="btn operationBtn-Detail-Order icon-ui-documentation" data-date="@date" title="點餐紀錄"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

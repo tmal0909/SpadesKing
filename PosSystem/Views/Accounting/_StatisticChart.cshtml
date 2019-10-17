@@ -1,0 +1,70 @@
+﻿@model StatisticChartViewModel
+
+@* 統計圖表 *@
+<div>
+    @* 統計資訊 *@
+    @*<div>
+        <div>
+            <div class="">開始日期</div>
+            <div class="">@Model.DateStart</div>
+        </div>
+        <div>
+            <div class="">結束日期</div>
+            <div class="">@Model.DateEnd</div>
+        </div>
+        <div>
+            <div class="">租金收入</div>
+            <div class="">@Model.SumRent</div>
+            <span>P</span>
+        </div>
+        <div>
+            <div class="">餐點收入</div>
+            <div class="">@Model.SumOrder</div>
+            <span>P</span>
+        </div>
+        <div>
+            <div class="">招待支出</div>
+            <div class="">@Model.SumTreat</div>
+            <span>P</span>
+        </div>
+        <div>
+            <div class="">收入合計</div>
+            <div class="">@Model.SumIncome</div>
+            <span>P</span>
+        </div>
+    </div>*@
+
+    <table>
+        <tbody>
+
+            <tr>
+                <th>開始日期</th>
+                <th>結束日期</th>
+                <th>租金收入</th>
+                <th>餐點收入</th>
+                <th>招待支出</th>
+                <th>收入合計</th>
+            </tr>
+            <tr>
+                <td>@Model.DateStart</td>
+                <td>@Model.DateEnd</td>
+                <td>@Model.SumRent</td>
+                <td>@Model.SumOrder</td>
+                <td>@Model.SumTreat</td>
+                <td>@Model.SumIncome</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    @* 統計圖 *@
+    <div id="statisticChart"></div>
+</div>
+
+<script>
+    InitChart({
+        Title : String.format('營利分析 ({0} ~ {1})', '@Model.DateStart', '@Model.DateEnd'),
+        Rent : @Model.SumRent,
+        Order: @Model.SumOrder,
+    });
+</script>

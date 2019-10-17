@@ -1,0 +1,28 @@
+﻿@model RentMD
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@* 租金管理 - 結帳 *@
+<div class="">
+    @using (Ajax.BeginForm("Check", "Rent", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnRequestBegin",
+        OnSuccess = "OnRequestSuccess",
+        OnFailure = "OnRequestFail"
+    }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="">
+            <label>結帳積分</label>
+            @Html.EditorFor(x => x.Integration, new { htmlAttributes = new { @class = "", @type = "number", @Value = "", @min = "10", @step = "10", placeholder = "" } })
+            @Html.ValidationMessageFor(x => x.Integration, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <input type="submit" class="btn" value="送出" />
+        </div>
+    }
+</div>

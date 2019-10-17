@@ -1,0 +1,49 @@
+﻿@model OperationMD
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@* 積分管理 - 提領 *@
+<div class="">
+    @using (Ajax.BeginForm("Withdraw", "Operation", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnBegin = "OnRequestBegin",
+        OnSuccess = "OnRequestSuccess",
+        OnFailure = "OnRequestFail"
+    }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="">
+            <label>會員</label>
+            @Html.MemberDropDownListFor(x => x.MemberID, Model.MemberOptions, new { @class = "operation-Member" })
+            @Html.ValidationMessageFor(x => x.MemberID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>積分餘額</label>
+            @Html.EditorFor(x => x.Balance, new { htmlAttributes = new { @class = "operation-Balance", @disabled = "disabled", placeholder = "" } })
+        </div>
+
+        <div class="">
+            <label>提領積分</label>
+            @Html.EditorFor(x => x.Integration, new { htmlAttributes = new { @class = "operation-Integration-Withdraw", @type = "number", @Value = "10", @min = "10", @step = "10", placeholder = "" } })
+            @Html.ValidationMessageFor(x => x.Integration, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <label>會員密碼</label>
+            @Html.PasswordFor(x => x.MemberPwd, new { @class = "operation-MemberPwd", @disabled = "disabled", placeholder = "" })
+            @Html.ValidationMessageFor(x => x.MemberPwd, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="">
+            <input type="submit" class="btn" value="送出" />
+        </div>
+    }
+</div>
+
+<script>
+    InitSelectInput($('#MemberID'));
+</script>

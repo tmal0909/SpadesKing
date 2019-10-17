@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="347px" height="25px" viewBox="0 0 347 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 45.2 (43514) - http://www.bohemiancoding.com/sketch -->
+    <title>line</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="平板-copy" transform="translate(-338.000000, -292.000000)" fill="#C2C185">
+            <g id="Group" transform="translate(273.000000, 76.000000)">
+                <g id="Group-2" transform="translate(65.000000, 216.000000)">
+                    <path d="M24.0208153,12 L12.5,0.47918472 L0.47918472,12.5 L12.5,24.5208153 L24.0208153,13 L322.979185,13 L334.5,24.5208153 L346.520815,12.5 L334.5,0.47918472 L322.979185,12 L24.0208153,12 Z" id="line"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
